@@ -1,7 +1,10 @@
-FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-ARG JAVA_OPTS
-ENV JAVA_OPTS=$JAVA_OPTS
-COPY web.jar web.jar
+FROM tomcat:10.1
+
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+COPY *.war /usr/local/tomcat/webapps
+
 EXPOSE 8080
-ENTRYPOINT exec java $JAVA_OPTS -jar web.jar
+
+CMD ["catalina.sh", "run"]
+
